@@ -15,16 +15,6 @@ function clean_colors {
   echo "${input}" | sed -E 's/\x1B\[[0-9;]*[mGK]//g'
 }
 
-# clean multiline text to be passed to Github API
-function clean_multiline_text {
-  local -r input="$1"
-  local output
-  output="${input//'%'/'%25'}"
-  output="${output//$'\n'/'%0A'}"
-  output="${output//$'\r'/'%0D'}"
-  output="${output//$'<'/'%3C'}"
-  echo "${output}"
-}
 
 # install and switch particular terraform version
 function install_tofu {

@@ -1,7 +1,7 @@
 # Container to run Terragrunt and Terraform
 # Contains inside mise to allow users to install custom Terraform and Terragrunt versions
 FROM ubuntu:22.04
-LABEL maintainer="Gruntwork <info@gruntwork.io>"
+# LABEL maintainer="Gruntwork <info@gruntwork.io>"
 
 ARG MISE_VERSION_INSTALL=v2024.4.0
 
@@ -15,6 +15,12 @@ RUN apt-get update \
     wget \
     sudo \
     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /tmp/
+RUN curl -L -o install-aws.sh https://raw.githubusercontent.com/unfor19/install-aws-cli-action/master/entrypoint.sh && \
+    sudo chmod +x install-aws.sh && \
+    sudo ./install-aws.sh "v2" "amd64" && \
+    sudo rm install-aws.sh
 
 RUN mkdir -p /root/.ssh
 COPY ./known_hosts /root/.ssh/known_hosts
