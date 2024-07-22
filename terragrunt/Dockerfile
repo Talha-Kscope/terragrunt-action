@@ -16,11 +16,9 @@ RUN apt-get update \
     sudo \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /tmp/
-RUN curl -L -o install-aws.sh https://raw.githubusercontent.com/unfor19/install-aws-cli-action/master/entrypoint.sh && \
-    sudo chmod +x install-aws.sh && \
-    sudo ./install-aws.sh "v2" "amd64" && \
-    sudo rm install-aws.sh
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    sudo ./aws/install
 
 RUN mkdir -p /root/.ssh
 COPY ./known_hosts /root/.ssh/known_hosts
